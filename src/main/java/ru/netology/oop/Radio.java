@@ -1,76 +1,85 @@
 package ru.netology.oop;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+
 public class Radio {
 
-    private int currentStationNumber;
-    private int soundVolume;
+    private int maxCurrentStationNumber = 9;
+    private int minCurrentStationNumber;
+    private int currentStationNumber = minCurrentStationNumber;
+    private int maxSoundVolume = 100;
+    private int minSoundVolume;
+    private int soundVolume = minSoundVolume;
 
-    public int getCurrentStationNumber() {
-        return currentStationNumber;
-    }
-
-    public int getSoundVolume() {
-        return soundVolume;
+    public Radio(int sizeStation) {
+        maxCurrentStationNumber = minCurrentStationNumber + sizeStation - 1;
+        maxSoundVolume = minSoundVolume + sizeStation;
     }
 
     public void setCurrentStationNumber(int newCurrentStationNumber) {
-        if (newCurrentStationNumber > 9) {
+        if (newCurrentStationNumber > maxCurrentStationNumber) {
             return;
         }
-        if (newCurrentStationNumber < 0) {
-            newCurrentStationNumber = 9;
+        if (newCurrentStationNumber < minCurrentStationNumber) {
+            newCurrentStationNumber = maxCurrentStationNumber;
         }
         currentStationNumber = newCurrentStationNumber;
     }
 
     public void setSoundVolume(int newSoundVolume) {
-        if (newSoundVolume > 100) {
-            newSoundVolume = 100;
+        if (newSoundVolume > maxSoundVolume) {
+            newSoundVolume = maxSoundVolume;
         }
-        if (newSoundVolume < 0) {
-            newSoundVolume = 0;
+        if (newSoundVolume < minSoundVolume) {
+            newSoundVolume = minSoundVolume;
         }
         soundVolume = newSoundVolume;
     }
 
     public void maxCurrentStationNumber() {
-        currentStationNumber = 9;
+        currentStationNumber = maxCurrentStationNumber;
+    }
+
+    public void maxSoundVolume() {
+        soundVolume = maxSoundVolume;
     }
 
     public void nextStationNumber() {
-        if (currentStationNumber >= 9) {
-            currentStationNumber = 0;
+        if (currentStationNumber >= maxCurrentStationNumber) {
+            currentStationNumber = minCurrentStationNumber;
             return;
         }
         currentStationNumber = currentStationNumber + 1;
     }
 
     public void prevStationNumber() {
-        if (currentStationNumber <= 0) {
-            currentStationNumber = 9;
+        if (currentStationNumber <= minCurrentStationNumber) {
+            currentStationNumber = maxCurrentStationNumber;
             return;
         }
         currentStationNumber = currentStationNumber - 1;
     }
 
-    public void maxSoundVolume() {
-        soundVolume = 100;
-    }
-
     public void moreSound() {
-        if (soundVolume >=100) {
+        if (soundVolume >= maxSoundVolume) {
             soundVolume = soundVolume;
         }
-        if (soundVolume < 100) {
+        if (soundVolume < maxSoundVolume) {
             soundVolume = soundVolume + 1;
         }
     }
 
     public void lessSound() {
-        if (soundVolume <= 0) {
+        if (soundVolume <= minSoundVolume) {
             soundVolume = soundVolume;
         }
-        if (soundVolume > 0) {
+        if (soundVolume > minSoundVolume) {
             soundVolume = soundVolume - 1;
         }
     }
